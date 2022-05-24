@@ -1,8 +1,9 @@
-exports.Test = (req, res) => {
-    console.log(req.body);
-    console.log(req.headers.authorization);
-    res.status(200).json({
-        data: "body",
-        success: true
-    })
-}
+const Member = require("./../models/Member");
+exports.Test = async (req, res, next) => {
+  const data = await Member.create(req.body);
+
+  res.status(200).json({
+    data: data,
+    success: true,
+  });
+};
