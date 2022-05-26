@@ -4,6 +4,9 @@ const port = 3000;
 const connectDB = require("./config/db");
 const colors = require("colors");
 const errorHandler = require("./middleware/error");
+const dotenv = require('dotenv');
+// Load env vars
+dotenv.config({ path: './config/config.env' });
 
 connectDB();
 // Body parser
