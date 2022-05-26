@@ -5,18 +5,25 @@ const Member = require("../models/Member");
 exports.Login = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
+  // Validate emil & password
   if (!username || !password) {
-    return next(new ErrorResponse("Please provide a username and password."));
+    return next(
+      new ErrorResponse("Please provide an username and password", 400)
+    );
   }
 
-  const member = Member.findOne({ username }).select("+password");
-
+  // Check for member
+  const member = await Member.findOne({ username: username }).select(
+    "+password"
+  );
   if (!member) {
     return next(new ErrorResponse("Invalid credentials", 401));
   }
 
-  //check if password matches
-  const isMatch = await Member.matchPassword(password);
+  // Check if password matches
+  const isMatch = await member.matchPassword(password);
 
-  console.log(isMatch);
+  if (!isMatch) {
+    return next(new ErrorResponse("Invalid credentials", 401));
+  }
 });
