@@ -17,7 +17,7 @@ exports.CreateUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  const data = Member.findById(req.params.id);
+  const data = await Member.findById(req.params.id);
   if (!data) {
     return next(new ErrorResponse(`No Entry with id: ${req.params.id}`));
   }
@@ -26,5 +26,27 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     data: {},
     success: true,
+  });
+});
+
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const data = await Member.findById(req.params.id);
+
+  if (!data) {
+    return next(new ErrorResponse("No Member with id: " + req.params.id));
+  }
+
+  res.status(200).json({
+    data: data,
+    success: true,
+  });
+});
+
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await Member.findById(req.member.id);
+
+  res.status(200).json({
+    success: true,
+    data: user
   });
 });
