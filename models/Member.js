@@ -21,7 +21,7 @@ const MemberSchema = new Mongoose.Schema({
 // Encrypt password using bcrypt
 MemberSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-    next();
+    next(); 
   }
 
   const salt = await bcrypt.genSalt(10);

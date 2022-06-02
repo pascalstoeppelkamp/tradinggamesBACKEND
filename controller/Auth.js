@@ -5,7 +5,7 @@ const Member = require("../models/Member");
 exports.Login = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
-  // Validate emil & password
+  // Validate username & password
   if (!username || !password) {
     return next(
       new ErrorResponse("Please provide an username and password", 400)
